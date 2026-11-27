@@ -6,6 +6,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Main;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
@@ -118,7 +119,15 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
                 .set("box-shadow", "0 8px 24px rgba(15, 23, 42, 0.08)")
                 .set("box-sizing", "border-box");
 
-        add(card);
+        // PERBAIKAN: bungkus kartu dengan <main> agar semua konten
+        // berada di dalam landmark (aturan axe "region").
+        Main main = new Main(card);
+        main.getStyle()
+                .set("display", "flex")
+                .set("justify-content", "center")
+                .set("width", "100%");
+
+        add(main);
     }
 
     @Override
