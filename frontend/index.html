@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Cashflow - Aplikasi Pencatat Arus Kas</title>
+  <meta name="description" content="Aplikasi pencatat arus kas untuk mengelola pemasukan dan pengeluaran." />
+  <style>
+    html, body, #outlet {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+    }
+    main { height: 100%; }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @supports (-webkit-touch-callout: none) {
+      @media (display-mode: standalone) {
+        html {
+          height: 100lvh;
+        }
+      }
+    }
+  </style>
+  <!-- index.ts is included here automatically (either by the dev server or during the build) -->
+</head>
+<body>
+  <main>
+    <h1 class="sr-only">Cashflow</h1>
+    <div id="outlet"></div>
+  </main>
+</body>
+</html>
