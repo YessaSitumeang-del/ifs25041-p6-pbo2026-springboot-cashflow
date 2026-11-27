@@ -39,6 +39,7 @@ final class PageCard {
         }
 
         Div card = new Div(body);
+        card.getElement().setAttribute("role", "main");   // <-- baris baru
         card.setWidthFull();
         if (fullHeight) {
             card.setHeightFull();
