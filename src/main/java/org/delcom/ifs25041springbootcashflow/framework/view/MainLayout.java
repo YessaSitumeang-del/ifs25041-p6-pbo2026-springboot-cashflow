@@ -61,7 +61,6 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver, AfterN
         header.getStyle()
                 .set("background", "#FFFFFF")
                 .set("border-bottom", "1px solid #E5E7EB");
-        header.getElement().setAttribute("role", "banner");
         addToNavbar(header);
     }
 
@@ -253,8 +252,6 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver, AfterN
 
         drawer.add(brand, menu);
         drawer.expand(menu);
-        drawer.getElement().setAttribute("role", "navigation");
-        drawer.getElement().setAttribute("aria-label", "Menu utama");
         addToDrawer(drawer);
     }
 
