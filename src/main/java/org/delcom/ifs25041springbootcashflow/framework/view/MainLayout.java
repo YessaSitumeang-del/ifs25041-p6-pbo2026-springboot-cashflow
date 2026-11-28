@@ -1,12 +1,16 @@
 package org.delcom.ifs25041springbootcashflow.framework.view;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Header;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Main;
+import com.vaadin.flow.component.html.Nav;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -56,6 +60,8 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver, AfterN
     private final Image headerAvatarImage = new Image();
     private final Span headerAvatarInitial = new Span();
     private final Div headerAvatar = new Div();
+    // Landmark <main> untuk isi halaman (aturan axe: landmark-one-main dan region).
+    private final Main mainContent = new Main();
 
     private record NavEntry(RouterLink link, String pathPrefix) {
     }
@@ -63,6 +69,8 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver, AfterN
     public MainLayout(IUserRepository userRepository) {
         this.userRepository = userRepository;
         setPrimarySection(Section.DRAWER);
+        mainContent.setSizeFull();
+        setContent(mainContent);
         AuthSession.currentUser(userRepository);
         createHeader();
         createDrawer();
@@ -82,7 +90,10 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver, AfterN
         header.getStyle()
                 .set(BACKGROUND, "#FFFFFF")
                 .set("border-bottom", BORDER_LIGHT);
-        addToNavbar(header);
+        // <header> = landmark banner.
+        Header banner = new Header(header);
+        banner.setWidthFull();
+        addToNavbar(banner);
     }
 
     private HorizontalLayout appBrandTitle(String fontSize, String iconSize) {
@@ -273,7 +284,11 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver, AfterN
 
         drawer.add(brand, menu);
         drawer.expand(menu);
-        addToDrawer(drawer);
+        // <nav> = landmark navigation.
+        Nav nav = new Nav(drawer);
+        nav.getElement().setAttribute("aria-label", "Menu utama");
+        nav.setSizeFull();
+        addToDrawer(nav);
     }
 
     private RouterLink navItem(
@@ -376,6 +391,15 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver, AfterN
                         span.getStyle().set(COLOR, textColor).set(FONT_WEIGHT, weight);
                     }
                 }));
+    }
+
+    /** Taruh view hasil routing di dalam <main>, bukan langsung di slot content AppLayout. */
+    @Override
+    public void showRouterLayoutContent(HasElement content) {
+        mainContent.removeAll();
+        if (content != null) {
+            mainContent.getElement().appendChild(content.getElement());
+        }
     }
 
     @Override
