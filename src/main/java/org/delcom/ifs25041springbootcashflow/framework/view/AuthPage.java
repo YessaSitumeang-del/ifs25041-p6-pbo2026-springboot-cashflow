@@ -24,14 +24,18 @@ import org.delcom.ifs25041springbootcashflow.domain.exception.ValidationExceptio
 import org.delcom.ifs25041springbootcashflow.domain.repository.IUserRepository;
 import org.delcom.ifs25041springbootcashflow.framework.auth.AuthSession;
 
-import java.util.function.Supplier;
-
 /**
  * Bagian bersama halaman Login dan Register supaya kode tidak terduplikasi.
  */
 final class AuthPage {
 
     private AuthPage() {
+    }
+
+    /** Aksi login/register yang boleh melempar ValidationException (checked). */
+    @FunctionalInterface
+    interface AuthAction {
+        User run() throws ValidationException;
     }
 
     static void styleHost(VerticalLayout host) {
@@ -77,12 +81,12 @@ final class AuthPage {
         field.addKeyUpListener(Key.ENTER, event -> submit.run());
     }
 
-    static Runnable submitAction(ProgressBar loadingBar, Button button, Supplier<User> action) {
+    static Runnable submitAction(ProgressBar loadingBar, Button button, AuthAction action) {
         Runnable submit = () -> {
             loadingBar.setVisible(true);
             button.setEnabled(false);
             try {
-                AuthSession.login(action.get());
+                AuthSession.login(action.run());
                 UI.getCurrent().navigate(FinanceView.class);
             } catch (ValidationException ex) {
                 loadingBar.setVisible(false);
