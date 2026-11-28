@@ -40,6 +40,9 @@ import java.util.List;
 public class UserTransactionsView extends VerticalLayout
         implements HasUrlParameter<Integer>, BeforeEnterObserver {
 
+    private static final String MARGIN = "margin";
+    private static final String COLOR = "color";
+
     private final UserUseCase userUseCase;
     private final FinanceUseCase financeUseCase;
     private final FinancePresenter presenter;
@@ -70,11 +73,11 @@ public class UserTransactionsView extends VerticalLayout
         setSpacing(false);
         getStyle().set("background", "#F3F4F6");
 
-        title.getStyle().set("margin", "0");
-        subtitle.getStyle().set("margin", "0").set("color", "#4B5563");
-        emptyState.getStyle().set("color", "#6B7280").set("padding", "0.5rem 0");
-        incomeValue.getStyle().set("color", "#166534");
-        expenseValue.getStyle().set("color", "#B91C1C");
+        title.getStyle().set(MARGIN, "0");
+        subtitle.getStyle().set(MARGIN, "0").set(COLOR, "#4B5563");
+        emptyState.getStyle().set(COLOR, "#6B7280").set("padding", "0.5rem 0");
+        incomeValue.getStyle().set(COLOR, "#166534");
+        expenseValue.getStyle().set(COLOR, "#B91C1C");
 
         Button back = new Button("Kembali", VaadinIcon.ARROW_LEFT.create(),
                 event -> UI.getCurrent().navigate(UsersView.class));
@@ -88,7 +91,7 @@ public class UserTransactionsView extends VerticalLayout
                 FinanceView.summaryCard("Saldo", balanceValue, "#7C3AED")
         );
         cards.setWidthFull();
-        cards.getStyle().set("flex-wrap", "wrap").set("margin", "0.75rem 0");
+        cards.getStyle().set("flex-wrap", "wrap").set(MARGIN, "0.75rem 0");
 
         FinanceView.addTransactionColumns(grid, presenter);
         grid.setSizeFull();

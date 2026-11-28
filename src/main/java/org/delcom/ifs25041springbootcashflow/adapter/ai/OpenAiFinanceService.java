@@ -25,6 +25,8 @@ import java.util.Map;
  */
 public class OpenAiFinanceService implements IFinanceAiService {
 
+    private static final String CONTENT = "content";
+
     /** Batas panjang isi error dari server AI yang ditampilkan ke pengguna. */
     private static final int MAX_ERROR_BODY_LENGTH = 200;
 
@@ -113,8 +115,8 @@ public class OpenAiFinanceService implements IFinanceAiService {
             Map<String, Object> payload = Map.of(
                     "model", selectedModel,
                     "messages", List.of(
-                            Map.of("role", "system", "content", systemInstruction),
-                            Map.of("role", "user", "content", prompt)
+                            Map.of("role", "system", CONTENT, systemInstruction),
+                            Map.of("role", "user", CONTENT, prompt)
                     ),
                     "temperature", 0.2
             );
@@ -133,11 +135,11 @@ public class OpenAiFinanceService implements IFinanceAiService {
             }
 
             JsonNode message = choices.get(0).get("message");
-            if (message == null || message.get("content") == null) {
+            if (message == null || message.get(CONTENT) == null) {
                 throw new DomainException("Konten respon AI kosong");
             }
 
-            String content = message.get("content").asText().trim();
+            String content = message.get(CONTENT).asText().trim();
             content = stripMarkdownCodeFence(content);
 
             JsonNode arrayNode = objectMapper.readTree(content);

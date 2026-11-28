@@ -30,6 +30,27 @@ import java.util.List;
  */
 public class MainLayout extends AppLayout implements BeforeEnterObserver, AfterNavigationObserver {
 
+    private static final String BACKGROUND = "background";
+    private static final String BORDER_LIGHT = "1px solid #E5E7EB";
+    private static final String DISPLAY = "display";
+    private static final String BLOCK = "block";
+    private static final String BORDER_RADIUS = "border-radius";
+    private static final String FLEX_SHRINK = "flex-shrink";
+    private static final String FONT_SIZE = "font-size";
+    private static final String FONT_WEIGHT = "font-weight";
+    private static final String MARGIN = "margin";
+    private static final String COLOR = "color";
+    private static final String WIDTH = "width";
+    private static final String BLUE_700 = "#1D4ED8";
+    private static final String FONT_SIZE_095REM = "0.95rem";
+    private static final String CURSOR = "cursor";
+    private static final String POINTER = "pointer";
+    private static final String BORDER = "border";
+    private static final String GRAY_600 = "#4B5563";
+    private static final String GRAY_800 = "#1F2937";
+    private static final String PADDING = "padding";
+    private static final String DATA_ACTIVE = "data-active";
+
     private final IUserRepository userRepository;
     private final List<NavEntry> navEntries = new ArrayList<>();
     private final Image headerAvatarImage = new Image();
@@ -59,8 +80,8 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver, AfterN
         header.setWidthFull();
         header.setPadding(true);
         header.getStyle()
-                .set("background", "#FFFFFF")
-                .set("border-bottom", "1px solid #E5E7EB");
+                .set(BACKGROUND, "#FFFFFF")
+                .set("border-bottom", BORDER_LIGHT);
         addToNavbar(header);
     }
 
@@ -69,17 +90,17 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver, AfterN
         logo.setWidth(iconSize);
         logo.setHeight(iconSize);
         logo.getStyle()
-                .set("display", "block")
-                .set("border-radius", "6px")
+                .set(DISPLAY, BLOCK)
+                .set(BORDER_RADIUS, "6px")
                 .set("object-fit", "cover")
-                .set("flex-shrink", "0");
+                .set(FLEX_SHRINK, "0");
 
         Span title = new Span("Cashflow");
         title.getStyle()
-                .set("font-size", fontSize)
-                .set("font-weight", "700")
-                .set("margin", "0")
-                .set("color", "#111827")
+                .set(FONT_SIZE, fontSize)
+                .set(FONT_WEIGHT, "700")
+                .set(MARGIN, "0")
+                .set(COLOR, "#111827")
                 .set("line-height", "1.2");
 
         HorizontalLayout brand = new HorizontalLayout(logo, title);
@@ -94,32 +115,32 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver, AfterN
         headerAvatarImage.setWidth("40px");
         headerAvatarImage.setHeight("40px");
         headerAvatarImage.getStyle()
-                .set("border-radius", "50%")
+                .set(BORDER_RADIUS, "50%")
                 .set("object-fit", "cover")
-                .set("display", "block");
+                .set(DISPLAY, BLOCK);
 
         headerAvatarInitial.getStyle()
-                .set("width", "40px")
+                .set(WIDTH, "40px")
                 .set("height", "40px")
-                .set("border-radius", "50%")
-                .set("display", "inline-flex")
+                .set(BORDER_RADIUS, "50%")
+                .set(DISPLAY, "inline-flex")
                 .set("align-items", "center")
                 .set("justify-content", "center")
-                .set("background", "#DBEAFE")
-                .set("color", "#1D4ED8")
-                .set("font-weight", "700")
-                .set("font-size", "0.95rem");
+                .set(BACKGROUND, "#DBEAFE")
+                .set(COLOR, BLUE_700)
+                .set(FONT_WEIGHT, "700")
+                .set(FONT_SIZE, FONT_SIZE_095REM);
 
         headerAvatar.removeAll();
         headerAvatar.add(headerAvatarInitial);
         headerAvatar.getStyle()
-                .set("cursor", "pointer")
-                .set("border", "2px solid #93C5FD")
-                .set("border-radius", "50%")
+                .set(CURSOR, POINTER)
+                .set(BORDER, "2px solid #93C5FD")
+                .set(BORDER_RADIUS, "50%")
                 .set("overflow", "hidden")
-                .set("width", "40px")
+                .set(WIDTH, "40px")
                 .set("height", "40px")
-                .set("flex-shrink", "0");
+                .set(FLEX_SHRINK, "0");
         headerAvatar.getElement().setAttribute("title", "Menu akun");
 
         ContextMenu accountMenu = new ContextMenu(headerAvatar);
@@ -128,36 +149,36 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver, AfterN
         AuthSession.currentUser().ifPresent(user -> {
             var identityItem = accountMenu.addItem(accountIdentity(user));
             identityItem.setEnabled(false);
-            identityItem.getStyle().set("cursor", "default");
-            var profileItem = accountMenu.addItem(menuItemContent(VaadinIcon.USER, "Profil", "#4B5563", "#1F2937"), event ->
+            identityItem.getStyle().set(CURSOR, "default");
+            var profileItem = accountMenu.addItem(menuItemContent(VaadinIcon.USER, "Profil", GRAY_600, GRAY_800), event ->
                     UI.getCurrent().navigate(ProfileView.class));
-            profileItem.getStyle().set("cursor", "pointer");
+            profileItem.getStyle().set(CURSOR, POINTER);
             var logoutItem = accountMenu.addItem(menuItemContent(VaadinIcon.SIGN_OUT, "Keluar", "#DC2626", "#DC2626"), event -> {
                 AuthSession.logout();
                 // Full reload agar UI tidak blank setelah keluar dari MainLayout.
                 UI.getCurrent().getPage().setLocation("login");
             });
-            logoutItem.getStyle().set("cursor", "pointer");
+            logoutItem.getStyle().set(CURSOR, POINTER);
         });
     }
 
     private VerticalLayout accountIdentity(User user) {
         Span username = new Span(user.getUsername());
         username.getStyle()
-                .set("display", "block")
-                .set("font-weight", "700")
-                .set("font-size", "0.95rem")
-                .set("color", "#111827")
-                .set("margin", "0");
+                .set(DISPLAY, BLOCK)
+                .set(FONT_WEIGHT, "700")
+                .set(FONT_SIZE, FONT_SIZE_095REM)
+                .set(COLOR, "#111827")
+                .set(MARGIN, "0");
 
         Span role = new Span(user.getRole().name());
         role.getStyle()
-                .set("display", "block")
+                .set(DISPLAY, BLOCK)
                 .set("margin-top", "0.15rem")
-                .set("font-size", "0.75rem")
-                .set("font-weight", "600")
+                .set(FONT_SIZE, "0.75rem")
+                .set(FONT_WEIGHT, "600")
                 .set("letter-spacing", "0.02em")
-                .set("color", "#1D4ED8");
+                .set(COLOR, BLUE_700);
 
         VerticalLayout identity = new VerticalLayout(username, role);
         identity.setPadding(false);
@@ -165,7 +186,7 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver, AfterN
         identity.setMargin(false);
         identity.getStyle()
                 .set("gap", "0")
-                .set("padding", "0.15rem 0")
+                .set(PADDING, "0.15rem 0")
                 .set("min-width", "8rem");
         return identity;
     }
@@ -174,15 +195,15 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver, AfterN
         Icon icon = iconType.create();
         icon.setSize("1rem");
         icon.getStyle()
-                .set("color", iconColor)
-                .set("flex-shrink", "0")
-                .set("margin", "0");
+                .set(COLOR, iconColor)
+                .set(FLEX_SHRINK, "0")
+                .set(MARGIN, "0");
 
         Span text = new Span(label);
         text.getStyle()
-                .set("color", textColor)
-                .set("font-weight", "600")
-                .set("margin", "0");
+                .set(COLOR, textColor)
+                .set(FONT_WEIGHT, "600")
+                .set(MARGIN, "0");
 
         HorizontalLayout content = new HorizontalLayout(icon, text);
         content.setAlignItems(FlexComponent.Alignment.CENTER);
@@ -193,10 +214,10 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver, AfterN
         content.setWidth(null);
         content.getStyle()
                 .set("gap", "0.5rem")
-                .set("margin", "0")
-                .set("padding", "0")
+                .set(MARGIN, "0")
+                .set(PADDING, "0")
                 .set("justify-content", "flex-start")
-                .set("display", "inline-flex");
+                .set(DISPLAY, "inline-flex");
         return content;
     }
 
@@ -229,13 +250,13 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver, AfterN
         drawer.setPadding(false);
         drawer.setSpacing(false);
         drawer.getStyle()
-                .set("background", "#FFFFFF")
-                .set("border-right", "1px solid #E5E7EB");
+                .set(BACKGROUND, "#FFFFFF")
+                .set("border-right", BORDER_LIGHT);
 
         Div brand = new Div();
         brand.getStyle()
-                .set("padding", "1.25rem 1rem 1rem")
-                .set("border-bottom", "1px solid #E5E7EB");
+                .set(PADDING, "1.25rem 1rem 1rem")
+                .set("border-bottom", BORDER_LIGHT);
         brand.add(appBrandTitle("1.05rem", "30px"));
 
         VerticalLayout menu = new VerticalLayout();
@@ -263,13 +284,13 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver, AfterN
     ) {
         Icon icon = iconType.create();
         icon.setSize("1.05rem");
-        icon.getStyle().set("color", "#4B5563");
+        icon.getStyle().set(COLOR, GRAY_600);
 
         Span text = new Span(label);
         text.getStyle()
-                .set("font-size", "0.95rem")
-                .set("font-weight", "500")
-                .set("color", "#1F2937");
+                .set(FONT_SIZE, FONT_SIZE_095REM)
+                .set(FONT_WEIGHT, "500")
+                .set(COLOR, GRAY_800);
 
         HorizontalLayout content = new HorizontalLayout(icon, text);
         content.setAlignItems(FlexComponent.Alignment.CENTER);
@@ -281,24 +302,24 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver, AfterN
         link.setRoute(view);
         link.add(content);
         link.getStyle()
-                .set("display", "block")
-                .set("width", "100%")
+                .set(DISPLAY, BLOCK)
+                .set(WIDTH, "100%")
                 .set("text-decoration", "none")
-                .set("padding", "0.7rem 0.85rem")
-                .set("border-radius", "10px")
+                .set(PADDING, "0.7rem 0.85rem")
+                .set(BORDER_RADIUS, "10px")
                 .set("box-sizing", "border-box")
-                .set("border", "1px solid transparent")
+                .set(BORDER, "1px solid transparent")
                 .set("transition", "background 0.15s ease")
-                .set("cursor", "pointer");
+                .set(CURSOR, POINTER);
 
         link.getElement().addEventListener("mouseover", e -> {
-            if (!"true".equals(link.getElement().getAttribute("data-active"))) {
-                link.getStyle().set("background", "#F3F4F6");
+            if (!"true".equals(link.getElement().getAttribute(DATA_ACTIVE))) {
+                link.getStyle().set(BACKGROUND, "#F3F4F6");
             }
         });
         link.getElement().addEventListener("mouseout", e -> {
-            if (!"true".equals(link.getElement().getAttribute("data-active"))) {
-                link.getStyle().set("background", "transparent");
+            if (!"true".equals(link.getElement().getAttribute(DATA_ACTIVE))) {
+                link.getStyle().set(BACKGROUND, "transparent");
             }
         });
 
@@ -327,17 +348,17 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver, AfterN
 
             RouterLink link = entry.link();
             if (active) {
-                link.getElement().setAttribute("data-active", "true");
+                link.getElement().setAttribute(DATA_ACTIVE, "true");
                 link.getStyle()
-                        .set("background", "#DBEAFE")
-                        .set("border", "1px solid #93C5FD");
-                styleNavChildren(link, "#1D4ED8", "#1E40AF", "600");
+                        .set(BACKGROUND, "#DBEAFE")
+                        .set(BORDER, "1px solid #93C5FD");
+                styleNavChildren(link, BLUE_700, "#1E40AF", "600");
             } else {
-                link.getElement().setAttribute("data-active", "false");
+                link.getElement().setAttribute(DATA_ACTIVE, "false");
                 link.getStyle()
-                        .set("background", "transparent")
-                        .set("border", "1px solid transparent");
-                styleNavChildren(link, "#4B5563", "#1F2937", "500");
+                        .set(BACKGROUND, "transparent")
+                        .set(BORDER, "1px solid transparent");
+                styleNavChildren(link, GRAY_600, GRAY_800, "500");
             }
         }
     }
@@ -349,10 +370,10 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver, AfterN
                 .findFirst()
                 .ifPresent(row -> row.getChildren().forEach(child -> {
                     if (child instanceof Icon icon) {
-                        icon.getStyle().set("color", iconColor);
+                        icon.getStyle().set(COLOR, iconColor);
                     }
                     if (child instanceof Span span) {
-                        span.getStyle().set("color", textColor).set("font-weight", weight);
+                        span.getStyle().set(COLOR, textColor).set(FONT_WEIGHT, weight);
                     }
                 }));
     }

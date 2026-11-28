@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Cashflow">
-  <rect width="64" height="64" fill="#2563EB"/>
-  <path d="M22 48V24" fill="none" stroke="#FFFFFF" stroke-width="5"/>
-  <path d="M13 28l9-10 9 10z" fill="#FFFFFF"/>
-  <path d="M42 16v24" fill="none" stroke="#BFDBFE" stroke-width="5"/>
-  <path d="M33 36l9 10 9-10z" fill="#BFDBFE"/>
-</svg>

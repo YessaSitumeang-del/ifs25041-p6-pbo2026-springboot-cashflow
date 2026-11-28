@@ -15,6 +15,22 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 final class ImagePreviewDialog {
 
+    private static final String WHITE = "#FFFFFF";
+    private static final String DISPLAY = "display";
+    private static final String BLOCK = "block";
+    private static final String BACKGROUND = "background";
+    private static final String PADDING = "padding";
+    private static final String BOX_SIZING = "box-sizing";
+    private static final String BORDER_BOX = "border-box";
+    private static final String WIDTH = "width";
+    private static final String BORDER_RADIUS = "border-radius";
+    private static final String CURSOR = "cursor";
+    private static final String JUSTIFY_CONTENT = "justify-content";
+    private static final String CENTER = "center";
+    private static final String ALIGN_ITEMS = "align-items";
+    private static final String OVERFLOW = "overflow";
+    private static final String POINTER = "pointer";
+
     private ImagePreviewDialog() {
     }
 
@@ -28,7 +44,7 @@ final class ImagePreviewDialog {
         Span headerTitle = new Span(title);
         headerTitle.getStyle()
                 .set("margin", "0")
-                .set("color", "#FFFFFF")
+                .set("color", WHITE)
                 .set("font-size", "1.125rem")
                 .set("font-weight", "600")
                 .set("line-height", "1.4");
@@ -38,50 +54,50 @@ final class ImagePreviewDialog {
                 .set("margin-top", "0.2rem")
                 .set("color", "#BFDBFE")
                 .set("font-size", "0.8rem")
-                .set("display", "block");
+                .set(DISPLAY, BLOCK);
 
         Div header = new Div(headerTitle, headerHint);
         header.getStyle()
-                .set("background", "#2563EB")
-                .set("padding", "0.9rem 1.5rem")
-                .set("box-sizing", "border-box")
-                .set("width", "100%");
+                .set(BACKGROUND, "#2563EB")
+                .set(PADDING, "0.9rem 1.5rem")
+                .set(BOX_SIZING, BORDER_BOX)
+                .set(WIDTH, "100%");
 
         Image image = new Image(imageUrl, title);
         image.getStyle()
-                .set("display", "block")
+                .set(DISPLAY, BLOCK)
                 .set("max-width", "100%")
                 .set("max-height", "68vh")
-                .set("width", "auto")
+                .set(WIDTH, "auto")
                 .set("height", "auto")
                 .set("object-fit", "contain")
-                .set("border-radius", "8px")
-                .set("cursor", "zoom-in")
+                .set(BORDER_RADIUS, "8px")
+                .set(CURSOR, "zoom-in")
                 .set("transition", "transform 0.25s ease")
                 .set("user-select", "none");
         image.getElement().setAttribute("title", "Klik untuk zoom");
 
         Div imageWrapper = new Div(image);
         imageWrapper.getStyle()
-                .set("display", "flex")
-                .set("justify-content", "center")
-                .set("align-items", "center")
-                .set("overflow", "auto")
+                .set(DISPLAY, "flex")
+                .set(JUSTIFY_CONTENT, CENTER)
+                .set(ALIGN_ITEMS, CENTER)
+                .set(OVERFLOW, "auto")
                 .set("max-height", "70vh")
                 .set("max-width", "min(88vw, 860px)")
-                .set("width", "100%")
-                .set("box-sizing", "border-box");
+                .set(WIDTH, "100%")
+                .set(BOX_SIZING, BORDER_BOX);
 
         Div body = new Div(imageWrapper);
         body.getStyle()
-                .set("display", "flex")
-                .set("justify-content", "center")
-                .set("align-items", "center")
-                .set("background", "#FFFFFF")
-                .set("padding", "1rem 1.25rem")
-                .set("box-sizing", "border-box")
-                .set("width", "100%")
-                .set("overflow", "hidden");
+                .set(DISPLAY, "flex")
+                .set(JUSTIFY_CONTENT, CENTER)
+                .set(ALIGN_ITEMS, CENTER)
+                .set(BACKGROUND, WHITE)
+                .set(PADDING, "1rem 1.25rem")
+                .set(BOX_SIZING, BORDER_BOX)
+                .set(WIDTH, "100%")
+                .set(OVERFLOW, "hidden");
 
         Dialog dialog = new Dialog();
         dialog.setCloseOnEsc(true);
@@ -97,12 +113,12 @@ final class ImagePreviewDialog {
                 currentScale.set(1.0);
                 image.getStyle()
                         .set("transform", "scale(1)")
-                        .set("cursor", "zoom-in");
+                        .set(CURSOR, "zoom-in");
             } else {
                 image.getStyle()
                         .set("transform", "scale(" + scale + ")")
                         .set("transform-origin", "center center")
-                        .set("cursor", "zoom-out");
+                        .set(CURSOR, "zoom-out");
             }
         };
 
@@ -120,38 +136,38 @@ final class ImagePreviewDialog {
             currentScale.set(Math.max(currentScale.get() - 0.4, 1.0));
             applyScale.run();
         });
-        zoomOutButton.getStyle().set("cursor", "pointer");
+        zoomOutButton.getStyle().set(CURSOR, POINTER);
 
         Button zoomInButton = new Button("Perbesar", VaadinIcon.SEARCH_PLUS.create(), event -> {
             currentScale.set(Math.min(currentScale.get() + 0.4, 3.0));
             applyScale.run();
         });
-        zoomInButton.getStyle().set("cursor", "pointer");
+        zoomInButton.getStyle().set(CURSOR, POINTER);
 
         Button closeButton = new Button("Tutup", VaadinIcon.CLOSE.create(), event -> dialog.close());
         closeButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        closeButton.getStyle().set("cursor", "pointer");
+        closeButton.getStyle().set(CURSOR, POINTER);
 
         Div footer = new Div(zoomOutButton, zoomInButton, closeButton);
         footer.getStyle()
-                .set("display", "flex")
-                .set("justify-content", "flex-end")
-                .set("align-items", "center")
+                .set(DISPLAY, "flex")
+                .set(JUSTIFY_CONTENT, "flex-end")
+                .set(ALIGN_ITEMS, CENTER)
                 .set("gap", "0.6rem")
-                .set("background", "#F3F4F6")
+                .set(BACKGROUND, "#F3F4F6")
                 .set("border-top", "1px solid #E5E7EB")
-                .set("padding", "0.85rem 1.5rem 1.1rem")
-                .set("box-sizing", "border-box")
-                .set("width", "100%");
+                .set(PADDING, "0.85rem 1.5rem 1.1rem")
+                .set(BOX_SIZING, BORDER_BOX)
+                .set(WIDTH, "100%");
 
         Div shell = new Div(header, body, footer);
         shell.getStyle()
-                .set("display", "flex")
+                .set(DISPLAY, "flex")
                 .set("flex-direction", "column")
-                .set("width", "100%")
-                .set("overflow", "hidden")
-                .set("border-radius", "12px")
-                .set("background", "#FFFFFF");
+                .set(WIDTH, "100%")
+                .set(OVERFLOW, "hidden")
+                .set(BORDER_RADIUS, "12px")
+                .set(BACKGROUND, WHITE);
 
         dialog.removeAll();
         dialog.add(shell);
@@ -189,10 +205,10 @@ final class ImagePreviewDialog {
         Image image = new Image(imageUrl, alt);
         image.setHeight(height);
         image.getStyle()
-                .set("border-radius", borderRadius)
+                .set(BORDER_RADIUS, borderRadius)
                 .set("object-fit", "cover")
-                .set("cursor", "pointer")
-                .set("display", "block");
+                .set(CURSOR, POINTER)
+                .set(DISPLAY, BLOCK);
         image.getElement().setAttribute("title", "Klik untuk memperbesar");
         image.addClickListener(event -> open(imageUrl, alt));
         return image;

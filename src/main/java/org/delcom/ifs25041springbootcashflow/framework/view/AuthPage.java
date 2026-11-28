@@ -29,6 +29,8 @@ import org.delcom.ifs25041springbootcashflow.framework.auth.AuthSession;
  */
 final class AuthPage {
 
+    private static final String MARGIN = "margin";
+
     private AuthPage() {
     }
 
@@ -77,7 +79,7 @@ final class AuthPage {
         field.setWidthFull();
         // Agar nilai sudah sampai server sebelum Enter memicu submit.
         field.setValueChangeMode(ValueChangeMode.EAGER);
-        field.getElement().getStyle().set("margin", "0");
+        field.getElement().getStyle().set(MARGIN, "0");
         field.addKeyUpListener(Key.ENTER, event -> submit.run());
     }
 
@@ -101,10 +103,10 @@ final class AuthPage {
 
     static Main build(String titleText, String subtitleText, Component... formChildren) {
         H1 title = new H1(titleText);
-        title.getStyle().set("margin", "0");
+        title.getStyle().set(MARGIN, "0");
 
         Paragraph subtitle = new Paragraph(subtitleText);
-        subtitle.getStyle().set("margin", "0 0 0.15rem 0").set("color", "#4B5563");
+        subtitle.getStyle().set(MARGIN, "0 0 0.15rem 0").set("color", "#4B5563");
 
         VerticalLayout form = new VerticalLayout(title, subtitle);
         form.add(formChildren);
